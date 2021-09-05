@@ -1,14 +1,26 @@
 import React from 'react'
-import {BrowserRouter as Router, Route,Switch} from 'react-router-dom'
-import App from '../App'
+import { BrowserRouter, Route, Switch,Redirect } from "react-router-dom";
+import Login from '../components/Login';
+import NotFoundPage from '../components/NotFoundPage';
 
-function AppRouter() {
+import DashboardRouter from './DashboardRouter';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
+
+const AppRouter = () => {
     return (
-        <Router>
-            <Route exact path='/' component={App} />
-            <LayoutRouter />
-        </Router>
-    )
+        <BrowserRouter>
+          <Switch>
+            <PublicRoute exact path="/" component={Login} />
+            <PrivateRoute path="/dashboard" component={DashboardRouter} />  
+            {/* not found pages   */}
+            <Route path="/404" component={NotFoundPage} />
+            <Route path="*">
+              <Redirect to="/404" />
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      )
 }
 
 export default AppRouter

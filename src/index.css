@@ -1,3 +1,6 @@
-     .active {
-        background-color:blue !important
+     .active > div {
+        background-color:#efefef !important;
+        /* color: white !important */
+        text-decoration: none !important;
     }
+    

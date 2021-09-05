@@ -1,12 +1,15 @@
-import Counter from './Counter'
-import DataProvider from './DataProvider';
+import AuthProvider from 'auth/AuthProvider'
+import React from 'react'
+import AppRouter from './router/AppRouter'
 
-function App() {
+
+const App = () => {
   return (
-    <DataProvider>
-      <Counter />
-    </DataProvider>
-  );
+    <AuthProvider>
+      <AppRouter />
+    </AuthProvider>
+  )
 }
 
-export default App;
+
+export default App

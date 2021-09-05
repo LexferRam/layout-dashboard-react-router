@@ -15,9 +15,12 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { Collapse } from "@material-ui/core";
+import { ExpandLess, ExpandMore, StarBorder } from "@material-ui/icons";
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import useAuth from "auth/useAuth";
 
 const drawerWidth = 240;
 
@@ -31,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     })
+  },
+  nested: {
+    paddingLeft: theme.spacing(4),
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -87,6 +93,9 @@ export default function DashboardLayout({ children }) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [openNestedList, setOpenNestedList] = React.useState(false);
+
+  const auth = useAuth();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -94,6 +103,10 @@ export default function DashboardLayout({ children }) {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleClick = () => {
+    setOpenNestedList(!openNestedList);
   };
 
   return (
@@ -118,7 +131,7 @@ export default function DashboardLayout({ children }) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Mini variant drawer
+            User: {auth.user.name}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -146,7 +159,7 @@ export default function DashboardLayout({ children }) {
         </div>
         <Divider />
         <List>
-          <NavLink activeClassName="active" to="/dashboard">
+          <NavLink exact to="/dashboard" activeClassName="active" style={{textDecoration:"none", color:"black"}}>
             <ListItem button key={1}>
               <ListItemIcon>
                 <MailIcon />
@@ -154,20 +167,48 @@ export default function DashboardLayout({ children }) {
               <ListItemText primary="Page 1" />
             </ListItem>
           </NavLink >
-          <NavLink activeClassName="active" to="/dashboard/page2">
-            <ListItem button key={1}>
+          <NavLink to="/dashboard/page2" activeClassName="active" style={{textDecoration:"none", color:"black"}}>
+            <ListItem button key={2}>
               <ListItemIcon>
                 <MailIcon />
               </ListItemIcon>
               <ListItemText primary="Page 2" />
             </ListItem>
           </NavLink >
+          <NavLink to="/dashboard/page3" activeClassName="active" style={{textDecoration:"none", color:"black"}}>
+            <ListItem button key={1}>
+              <ListItemIcon>
+                <MailIcon />
+              </ListItemIcon>
+              <ListItemText primary="Page 3" />
+            </ListItem>
+          </NavLink >
+            <ListItem button onClick={handleClick}>
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary="Categories" />
+              {openNestedList ? <ExpandLess /> : <ExpandMore />}
+           </ListItem>
+          <Collapse in={openNestedList} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <NavLink to="/dashboard/category/category1" activeClassName="active" style={{textDecoration:"none", color:"black"}}>
+                  <ListItem button className={classes.nested}>
+                    <ListItemIcon>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText primary="Starred" />
+                  </ListItem>
+                </NavLink >
+            </List>
+          </Collapse>
         </List>
         <Divider />
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {children}</main>
+        {children}
+      </main>
     </div>
   );
 }
