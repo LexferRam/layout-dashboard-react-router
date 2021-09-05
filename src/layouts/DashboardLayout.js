@@ -1,39 +1,40 @@
-import React from "react";
-import clsx from "clsx";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import MailIcon from "@material-ui/icons/Mail";
-import { NavLink } from "react-router-dom";
-import { Collapse } from "@material-ui/core";
-import { ExpandLess, ExpandMore, StarBorder } from "@material-ui/icons";
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import useAuth from "auth/useAuth";
+import React from 'react'
+import clsx from 'clsx'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
+import Drawer from '@material-ui/core/Drawer'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import List from '@material-ui/core/List'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import Typography from '@material-ui/core/Typography'
+import Divider from '@material-ui/core/Divider'
+import IconButton from '@material-ui/core/IconButton'
+import MenuIcon from '@material-ui/icons/Menu'
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import { NavLink } from 'react-router-dom'
+import { Collapse } from '@material-ui/core'
+import { ExpandLess, ExpandMore } from '@material-ui/icons'
 
-const drawerWidth = 240;
+import Icon from '@material-ui/core/Icon'
+import useAuth from 'auth/useAuth'
+import { menuItems } from './menuItems'
+
+const drawerWidth = 240
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex"
+    display: 'flex',
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(["width", "margin"], {
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
+      duration: theme.transitions.duration.leavingScreen,
+    }),
   },
   nested: {
     paddingLeft: theme.spacing(4),
@@ -41,116 +42,127 @@ const useStyles = makeStyles((theme) => ({
   appBarShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   menuButton: {
-    marginRight: 36
+    marginRight: 36,
   },
   hide: {
-    display: "none"
+    display: 'none',
   },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
-    whiteSpace: "nowrap"
+    whiteSpace: 'nowrap',
   },
   drawerOpen: {
     width: drawerWidth,
-    transition: theme.transitions.create("width", {
+    transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   drawerClose: {
-    transition: theme.transitions.create("width", {
+    transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
+      duration: theme.transitions.duration.leavingScreen,
     }),
-    overflowX: "hidden",
+    overflowX: 'hidden',
     width: theme.spacing(7) + 1,
-    [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(9) + 1
-    }
+    [theme.breakpoints.up('sm')]: {
+      width: theme.spacing(9) + 1,
+    },
   },
   toolbar: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
-    ...theme.mixins.toolbar
+    ...theme.mixins.toolbar,
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3)
-  }
-}));
+    padding: theme.spacing(3),
+  },
+}))
 
 export default function DashboardLayout({ children }) {
-  const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-  const [openNestedList, setOpenNestedList] = React.useState(false);
+  const classes = useStyles()
+  const theme = useTheme()
+  const [open, setOpen] = React.useState(false)
+  const [openNestedList, setOpenNestedList] = React.useState(false)
 
-  const auth = useAuth();
+  const auth = useAuth()
 
   const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleDrawerClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const handleClick = () => {
-    setOpenNestedList(!openNestedList);
-  };
+    setOpenNestedList(!openNestedList)
+  }
 
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        position="fixed"
+        position='fixed'
         className={clsx(classes.appBar, {
-          [classes.appBarShift]: open
+          [classes.appBarShift]: open,
         })}
       >
         <Toolbar>
           <IconButton
-            color="inherit"
-            aria-label="open drawer"
+            color='inherit'
+            aria-label='open drawer'
             onClick={handleDrawerOpen}
-            edge="start"
+            edge='start'
             className={clsx(classes.menuButton, {
-              [classes.hide]: open
+              [classes.hide]: open,
             })}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant='h6' noWrap style={{ flex: 0.95 }}>
             User: {auth.user.name}
+          </Typography>
+          <Typography
+            variant='h6'
+            style={{ cursor: 'pointer' }}
+            noWrap
+            onClick={() => {
+              const result = window.confirm('Are you sure you want to logout?')
+              if (result) auth.logout()
+            }}
+          >
+            Salir
           </Typography>
         </Toolbar>
       </AppBar>
       <Drawer
-        variant="permanent"
+        variant='permanent'
         className={clsx(classes.drawer, {
           [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open
+          [classes.drawerClose]: !open,
         })}
         classes={{
           paper: clsx({
             [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open
-          })
+            [classes.drawerClose]: !open,
+          }),
         }}
       >
         <div className={classes.toolbar}>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
+            {theme.direction === 'rtl' ? (
               <ChevronRightIcon />
             ) : (
               <ChevronLeftIcon />
@@ -159,49 +171,57 @@ export default function DashboardLayout({ children }) {
         </div>
         <Divider />
         <List>
-          <NavLink exact to="/dashboard" activeClassName="active" style={{textDecoration:"none", color:"black"}}>
-            <ListItem button key={1}>
-              <ListItemIcon>
-                <MailIcon />
-              </ListItemIcon>
-              <ListItemText primary="Page 1" />
-            </ListItem>
-          </NavLink >
-          <NavLink to="/dashboard/page2" activeClassName="active" style={{textDecoration:"none", color:"black"}}>
-            <ListItem button key={2}>
-              <ListItemIcon>
-                <MailIcon />
-              </ListItemIcon>
-              <ListItemText primary="Page 2" />
-            </ListItem>
-          </NavLink >
-          <NavLink to="/dashboard/page3" activeClassName="active" style={{textDecoration:"none", color:"black"}}>
-            <ListItem button key={1}>
-              <ListItemIcon>
-                <MailIcon />
-              </ListItemIcon>
-              <ListItemText primary="Page 3" />
-            </ListItem>
-          </NavLink >
-            <ListItem button onClick={handleClick}>
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary="Categories" />
-              {openNestedList ? <ExpandLess /> : <ExpandMore />}
-           </ListItem>
-          <Collapse in={openNestedList} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <NavLink to="/dashboard/category/category1" activeClassName="active" style={{textDecoration:"none", color:"black"}}>
-                  <ListItem button className={classes.nested}>
+          {menuItems &&
+            menuItems.map((item) =>
+              !item.dropdown ? (
+                <NavLink
+                  exact
+                  to={item.to}
+                  activeClassName='active'
+                  style={{ textDecoration: 'none', color: 'black' }}
+                  key={item.key}
+                >
+                  <ListItem button>
                     <ListItemIcon>
-                      <StarBorder />
+                      <Icon>{item.icon}</Icon>
                     </ListItemIcon>
-                    <ListItemText primary="Starred" />
+                    <ListItemText primary={item.listItemText} />
                   </ListItem>
-                </NavLink >
-            </List>
-          </Collapse>
+                </NavLink>
+              ) : (
+                <>
+                  <ListItem button onClick={handleClick} key={item.key}>
+                    <ListItemIcon>
+                      <Icon>{item.icon}</Icon>
+                    </ListItemIcon>
+                    <ListItemText primary={item.listItemText} />
+                    {openNestedList ? <ExpandLess /> : <ExpandMore />}
+                  </ListItem>
+                  <Collapse in={openNestedList} timeout='auto' unmountOnExit>
+                    {item.dropdownItems.map((dropdownitem) => (
+                      <List
+                        component='div'
+                        disablePadding
+                        key={dropdownitem.key}
+                      >
+                        <NavLink
+                          to={dropdownitem.to}
+                          activeClassName='active'
+                          style={{ textDecoration: 'none', color: 'black' }}
+                        >
+                          <ListItem button className={classes.nested}>
+                            <ListItemIcon>
+                              <Icon>{dropdownitem.icon}</Icon>
+                            </ListItemIcon>
+                            <ListItemText primary={dropdownitem.listItemText} />
+                          </ListItem>
+                        </NavLink>
+                      </List>
+                    ))}
+                  </Collapse>
+                </>
+              )
+            )}
         </List>
         <Divider />
       </Drawer>
@@ -210,5 +230,5 @@ export default function DashboardLayout({ children }) {
         {children}
       </main>
     </div>
-  );
+  )
 }
