@@ -8,14 +8,15 @@ export default function useFetch(url) {
 
   useEffect(() => {
     ;(async function () {
-      //   const source = axios.CancelToken.source()
-      //   let isMounted = true
+      const source = axios.CancelToken.source()
+      let isMounted = true
       try {
         setLoading(true)
         const response = await axios.get(url, { cancelToken: source.token })
-        // if (isMounted) {
-        setData(response.data)
-        // }
+        if (isMounted) {
+          setData(response.data)
+          console.log(response.data)
+        }
       } catch (error) {
         if (!isMounted) return // comp alresady unmounted, nothing to do
         if (axios.isCancel(error)) console.log(error)
@@ -39,10 +40,10 @@ export default function useFetch(url) {
         setLoading(false)
       }
       //   //cancelando subscripciones
-      //   return () => {
-      //     isMounted = false
-      //     source.cancel()
-      //   }
+      return () => {
+        isMounted = false
+        source.cancel()
+      }
     })()
   }, [url])
 
