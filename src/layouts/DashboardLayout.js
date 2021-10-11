@@ -172,7 +172,7 @@ export default function DashboardLayout({ children }) {
         <Divider />
         <List>
           {menuItems &&
-            menuItems.map((item) =>
+            menuItems.map((item,i) =>
               !item.dropdown ? (
                 <NavLink
                   exact

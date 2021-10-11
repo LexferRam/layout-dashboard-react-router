@@ -20,18 +20,18 @@ export const menuItems = [
     listItemText: 'Page 3',
     dropdown: false,
   },
-  {
-    key: 4,
-    icon: 'category',
-    listItemText: 'Category',
-    dropdown: true,
-    dropdownItems: [
-      {
-        key: 5,
-        to: '/dashboard/category/category1',
-        icon: 'directions_car',
-        listItemText: 'Page 3',
-      },
-    ],
-  },
+  // {
+  //   key: 4,
+  //   icon: 'category',
+  //   listItemText: 'Category',
+  //   dropdown: true,
+  //   dropdownItems: [
+  //     {
+  //       key: 5,
+  //       to: '/dashboard/category/category1',
+  //       icon: 'directions_car',
+  //       listItemText: 'Page 3',
+  //     },
+  //   ],
+  // },
 ]

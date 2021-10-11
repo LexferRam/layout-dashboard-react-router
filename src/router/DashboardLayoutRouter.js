@@ -5,15 +5,15 @@ import DashboardLayout from '../layouts/DashboardLayout';
 const DashboardLayoutRouter = ({ component: Component, ...rest }) => {
     return (
         <Route
-        {...rest}
-        render={(matchProps) => (
-            <DashboardLayout>
-            <Component {...matchProps} />
-            </DashboardLayout>
-        )}
+            {...rest}
+            render={(matchProps) => (
+                <DashboardLayout>
+                    <Component {...matchProps} />
+                </DashboardLayout>
+            )}
         />
     );
-    };
- 
+};
+
 
 export default DashboardLayoutRouter

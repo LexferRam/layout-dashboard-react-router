@@ -1,14 +1,34 @@
 import axios from 'axios'
 
-// axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com'
-// instance.defaults.baseURL = `${process.env.GATSBY_API_URL}/asg-api/`
+// axiosInstance.defaults.baseURL = `${process.env.GATSBY_API_URL}/asg-api/`
 // const token = getToken()
-// instance.defaults.headers.common['Authorization'] = `bearer ${token}`
 
 const axiosInstance = axios.create({
   baseURL: 'https://jsonplaceholder.typicode.com',
-  //   headers: { 'X-Custom-Header': 'foobar' },
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+  },
 })
+// axiosInstance.defaults.headers.common['Authorization'] = `bearer ${token}`
+
+
+// export function getRequest(URL) {
+//   alert(URL)
+//   return axiosInstance.get(`/${URL}`).then(response => response);
+// }
+
+// export function postRequest(URL, payload) {
+//   return axiosInstance.post(`/${URL}`, payload).then(response => response);
+// }
+
+// export function patchRequest(URL, payload) {
+//   return axiosInstance.patch(`/${URL}`, payload).then(response => response);
+// }
+
+// export function deleteRequest(URL) {
+//   return axiosInstance.delete(`/${URL}`).then(response => response);
+// }
 
 // Add a request interceptor
 axiosInstance.interceptors.request.use(
